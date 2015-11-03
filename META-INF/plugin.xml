@@ -1,0 +1,32 @@
+<idea-plugin version="2">
+    <id>com.timothybasanov.cmdlinevcs</id>
+    <name>Command-line "VCS"</name>
+    <version>1.0</version>
+    <category>VCS Integration</category>
+    <vendor email="timofey.basanov@gmail.com" url="https://github.com/timothybasanov">
+      Timothy Basanov</vendor>
+
+    <description><![CDATA[
+      Allows using simple command line scripts to generate diffs and file lists.
+      It's useful when you use some custom VCS and IntelliJ does not have readily
+      available plugin.
+
+      <p>Create executable <pre>cmdline-vcs</pre> that accepts these parameters:
+      <pre>
+        cmdline-vcs list-changed-files $dir$ -> list of "$filename$;$revision$"
+            where NULL is a special revision to mark added files.
+        cmdline-vcs get-base-file-contents $filename$ $revision$
+        cmdline-vcs get-vcs-root $dir$ -> absolute path to the VCS root
+      </pre>
+    ]]></description>
+
+    <depends>com.intellij.modules.vcs</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+        <vcs name="Cmdline"
+             vcsClass="com.timothybasanov.cmdlinevcs.CmdlineVcs"/>
+        <vcsRootChecker
+                implementation="com.timothybasanov.cmdlinevcs.CmdlineVcsRootChecker"/>
+    </extensions>
+</idea-plugin>
